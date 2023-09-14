@@ -9,4 +9,4 @@ FROM openjdk:17-jdk-slim
 COPY --from=build /target/bookShell-0.0.1-SNAPSHOT.jar bookShell.jar
 # ENV PORT=8080
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","demo.jar"]
+ENTRYPOINT ["java","-jar","bookShell.jar"]
