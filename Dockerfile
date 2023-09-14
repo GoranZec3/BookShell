@@ -1,11 +1,11 @@
-FROM maven:3.8-openjdk-17 AS build
-COPY . .
+FROM maven:3.9.2-eclipse-temurin-17-alpine as builder
+
+COPY ./src src/
+COPY ./pom.xml pom.xml
+
 RUN mvn clean package -DskipTests
 
-# Package stage
-#
-FROM openjdk:17-jdk-slim
-COPY --from=build /target/bookShell-0.0.1-SNAPSHOT.jar bookShell.jar
-# ENV PORT=8080
+FROM eclipse-temurin:17-jre-alpine
+COPY --from=builder target/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar", "bookShell.jar"]
+CMD ["java","-jar","app.jar"]
